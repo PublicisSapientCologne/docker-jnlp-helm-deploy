@@ -68,6 +68,11 @@ if [ -z "${VERSION}" ]; then
     VERSION=latest
 fi
 
+echo "Artifact: ${ARTIFACT}"
+echo "Namespace: ${NAMESPACE}"
+echo "TLS secrets location: ${TLS_SECRETS_LOCATION}"
+echo "Version: ${VERSION}"
+
 if [ "${HELM_OPERATION}" == "upgrade" ]; then
     helm upgrade \
       --tls \
