@@ -1,5 +1,3 @@
-#! /bin/sh
-
 ARTIFACT=$1
 VERSION=$2
 ENVIRONMENT=$3
