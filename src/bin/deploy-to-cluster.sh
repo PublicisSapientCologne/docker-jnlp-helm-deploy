@@ -111,5 +111,5 @@ fi
 
 if [ -n "${SLACK_URL}" ]; then
     SLACK_MESSAGE="(${ARTIFACT}) Deployed version ${VERSION} to the ${NAMESPACE} environment"
-    echo curl -X POST -H 'Content-type: application/json' --data "{\"text\":\"$SLACK_MESSAGE\"}" ${SLACK_URL}
+    curl -X POST -H 'Content-type: application/json' --data "{\"text\":\"$SLACK_MESSAGE\"}" ${SLACK_URL}
 fi
