@@ -80,6 +80,8 @@ if [ "${HELM_OPERATION}" == "upgrade" ]; then
       --tls-cert ${TLS_SECRETS_LOCATION}/cert.pem \
       --tls-key ${TLS_SECRETS_LOCATION}/key.pem \
       --tiller-namespace ${NAMESPACE} \
+      --namespace ${NAMESPACE} \
+      --install \
       ${ARTIFACT} \
       deploy/${DEPLOY_SUBDIRECTORY}template \
       -f deploy/${DEPLOY_SUBDIRECTORY}configuration/${NAMESPACE}.yaml \
