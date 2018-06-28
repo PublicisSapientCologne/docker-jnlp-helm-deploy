@@ -86,17 +86,6 @@ if [ "${HELM_OPERATION}" == "upgrade" ]; then
       deploy/${DEPLOY_SUBDIRECTORY}template \
       -f deploy/${DEPLOY_SUBDIRECTORY}configuration/${NAMESPACE}.yaml \
       --set image.version=${VERSION}
-elif [ "${HELM_OPERATION}" == "install" ]; then
-   helm install \
-      --tls \
-      --tls-ca-cert ${TLS_SECRETS_LOCATION}/ca.pem \
-      --tls-cert ${TLS_SECRETS_LOCATION}/cert.pem \
-      --tls-key ${TLS_SECRETS_LOCATION}/key.pem \
-      --tiller-namespace ${NAMESPACE} \
-      deploy/${DEPLOY_SUBDIRECTORY}template \
-      --name ${ARTIFACT} \
-      -f deploy/${DEPLOY_SUBDIRECTORY}configuration/${NAMESPACE}.yaml \
-      --set image.version=${VERSION}
 elif [ "${HELM_OPERATION}" == "delete" ]; then
    helm del \
       --tls \
