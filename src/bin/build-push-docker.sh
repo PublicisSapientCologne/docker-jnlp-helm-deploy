@@ -16,8 +16,6 @@
 # Two new images will be created here
 #
 #     my-private-docker-registry.foo/path/name:1.0.0
-#     AND
-#     my-private-docker-registry.foo/path/name:latest
 #
 # ============================================================================
 
@@ -65,27 +63,19 @@ elif [ -z "${USERNAME}" ]; then
 elif [ -z "${PASSWORD}" ]; then
     echo "ERROR: No password defined! (Missing --password argument)"
     exit 1
-fi
-
-if [ -z "${VERSION}" ]; then
-    echo "WARNING: No explicit version has been defined! Using 'latest' as default"
-    VERSION="latest"
+elif [ -z "${VERSION}" ]; then
+    echo "ERROR: No version defined! (Missing --version argument)"
+    exit 1
 fi
 
 if [ -z "${DOCKERFILE}" ]; then
-    echo "Info: No explicit Deockerfile has been defined! Using 'Dockerfile' as default"
+    echo "Info: No explicit Dockerfile has been defined! Using 'Dockerfile' as default"
     DOCKERFILE="Dockerfile"
 fi
 
-FULL_IMAGE_NAME=${PRIVATE_REPO_URL}${PRIVATE_REPO_PATH}/${IMAGE_NAME}
+FULL_IMAGE_NAME=${PRIVATE_REPO_URL}${PRIVATE_REPO_PATH}/${IMAGE_NAME}:${VERSION}
 
 echo "Push image: ${FULL_IMAGE_NAME}:${VERSION}"
 docker login ${PRIVATE_REPO_URL} -u ${USERNAME} --password-stdin ${PASSWORD}
-set +x && docker build -f ${DOCKERFILE} -t ${FULL_IMAGE_NAME} .
-set +x && docker tag ${FULL_IMAGE_NAME}:latest ${FULL_IMAGE_NAME}:${VERSION}
-
-set +x && docker push ${FULL_IMAGE_NAME}:${VERSION}
-if [ "$VERSION" != "latest" ]; then
-    set +x && docker push ${FULL_IMAGE_NAME}:latest
-    echo "Push image: ${FULL_IMAGE_NAME}:latest"
-fi
+docker build -f ${DOCKERFILE} -t ${FULL_IMAGE_NAME} .
+docker push ${FULL_IMAGE_NAME}
