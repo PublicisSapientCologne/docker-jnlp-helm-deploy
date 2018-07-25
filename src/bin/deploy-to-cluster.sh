@@ -86,6 +86,7 @@ if [ "${HELM_OPERATION}" == "upgrade" ]; then
       deploy/${DEPLOY_SUBDIRECTORY}template \
       -f deploy/${DEPLOY_SUBDIRECTORY}configuration/${NAMESPACE}.yaml \
       --set image.version=${VERSION}
+    exit
 elif [ "${HELM_OPERATION}" == "delete" ]; then
    helm del \
       --tls \
@@ -95,6 +96,7 @@ elif [ "${HELM_OPERATION}" == "delete" ]; then
       --tiller-namespace ${NAMESPACE} \
       --purge \
       ${ARTIFACT}
+   exit
 else
     echo "ERROR: Invalid helm operation: ${HELM_OPERATION}"
     exit 1
