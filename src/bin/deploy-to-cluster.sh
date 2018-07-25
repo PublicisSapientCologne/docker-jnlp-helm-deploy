@@ -53,7 +53,7 @@ if [ -z "${ARTIFACT}" ]; then
     echo "ERROR: No artifact defined! (Missing --artifact argument)"
     exit 1
 elif [ -z "${TLS_SECRETS_LOCATION}" ]; then
-    echo "ERROR: No TLS secrets location defined! (Missing --tls--secrets-location argument)"
+    echo "ERROR: No TLS secrets location defined! (Missing --tls-secrets-location argument)"
     exit 1
 elif [ ! -d "${TLS_SECRETS_LOCATION}" ]; then
     echo "ERROR: TLS secrets location not existing at defined location: ${TLS_SECRETS_LOCATION}"
