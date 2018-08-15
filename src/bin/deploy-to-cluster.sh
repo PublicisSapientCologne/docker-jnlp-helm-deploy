@@ -86,7 +86,7 @@ if [ "${HELM_OPERATION}" == "upgrade" ]; then
       deploy/${DEPLOY_SUBDIRECTORY}template \
       -f deploy/${DEPLOY_SUBDIRECTORY}configuration/${NAMESPACE}.yaml \
       --set image.version=${VERSION}
-    exit
+      helmExitCode=$?
 elif [ "${HELM_OPERATION}" == "delete" ]; then
    helm del \
       --tls \
@@ -96,10 +96,16 @@ elif [ "${HELM_OPERATION}" == "delete" ]; then
       --tiller-namespace ${NAMESPACE} \
       --purge \
       ${ARTIFACT}
-   exit
+      helmExitCode=$?
 else
     echo "ERROR: Invalid helm operation: ${HELM_OPERATION}"
     exit 1
+fi
+
+if [ "$helmExitCode" -ne "0" ]
+then
+    echo Helm exit code: $helmExitCode
+    exit $helmExitCode
 fi
 
 if [ -n "${SLACK_URL}" ]; then
